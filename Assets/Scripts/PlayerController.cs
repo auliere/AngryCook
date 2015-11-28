@@ -12,12 +12,14 @@ public class PlayerController : MonoBehaviour {
 
 	private Weapon[] weapons;
 	private int currentWeapon;
-  public float health;
+    private float health;
+    public float maxHealth;
 
 	private Rigidbody rb;
 	
 	void Start()
 	{
+        health = maxHealth;
 		rb = GetComponent<Rigidbody>();
 		InitializeWeapons ();
 	}
@@ -62,5 +64,28 @@ public class PlayerController : MonoBehaviour {
 			this.weapons[i].addAmmo(weapons[i].ammo);
 		}
 	}
+
+
+    void OnCollisionStay(Collision hit)
+    {
+        Debug.Log(hit.collider.gameObject.tag);
+        switch (hit.gameObject.tag)
+        {
+            case "Enemy":
+                var enemy = hit.collider.GetComponent<EnemyActionScript>();
+                if (enemy.stanned)
+                    return;
+
+                health -= enemy.damage * Time.deltaTime;
+                Debug.Log("Taking damage, health left: " + health);
+                if (health <= 0)
+                {
+                    Time.timeScale = 0;
+                    Debug.Log("Game Over, you are dead");
+                    //Destroy(gameObject);
+                }
+                break;
+        }
+    }
 
 }
