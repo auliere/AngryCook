@@ -22,7 +22,6 @@ public class SpawnScript : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-//        player = GameObject.FindGameObjectWithTag("Player");
         numberOfEnemies = rand.Next(10, 20);
         for (int i = 2; i < numberOfEnemies+2; i++)
             Spawn(i);
@@ -38,9 +37,8 @@ public class SpawnScript : MonoBehaviour {
             player.transform.position.y, player.transform.position.z + rand.Next(minX, maxX) * Mathf.Sin(i));
     }
 
-
 	// Update is called once per frame
 	void Update () {
-	    
+		player.GetComponent<PlayerController> ().setEnemiesLeft (numberOfEnemies);
 	}
 }

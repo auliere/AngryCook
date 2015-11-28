@@ -19,17 +19,23 @@ public class FridgeController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (controller != null && Input.GetKeyDown(KeyCode.F)) {
-            Debug.Log("Tacking ammo from a fringe");
             controller.addWeaponAmmo(weapons);
+			controller.showMessage("Food taken!");
         }
 	}
 
     void OnTriggerEnter(Collider collider) {
         
         if(collider.gameObject.CompareTag("Player")) {
-            Debug.Log("Here");
             controller = collider.gameObject.GetComponentInChildren<PlayerController>();
-            Debug.Log(controller.ToString());
+			controller.showMessage("Press F to take some food");
         }
     }
+
+	void OnTriggerExit(Collider collider) {
+		if(collider.gameObject.CompareTag("Player")) {
+			controller = collider.gameObject.GetComponentInChildren<PlayerController>();
+			controller.showMessage("");
+		}
+	}
 }

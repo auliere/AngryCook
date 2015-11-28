@@ -7,7 +7,10 @@ public class EnemyActionScript : MonoBehaviour {
     public float demage;
     public float speed = 1;
 
+	public int experience;
+
     GameObject player;
+
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -22,15 +25,11 @@ public class EnemyActionScript : MonoBehaviour {
         if (deltaX * deltaX + deltaY * deltaY + deltaz * deltaz <= 1000)
         {
             Move();
-            //Debug.Log("in range");
         }
-        //else
-           // Debug.Log("not in range");
     }
 
     void Move ()
     {
-        //Debug.Log("Moving");
         gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, player.transform.position, speed * Time.deltaTime);
     }
 
@@ -39,22 +38,11 @@ public class EnemyActionScript : MonoBehaviour {
           {
             case "Bullet":
                 float damage = collider.gameObject.GetComponent<BulletController>().damage;
-                Debug.Log("Decreasing hunger");
                 hungerLevel -= damage;
-				//Destroy(collider.gameObject);
 				if (hungerLevel <= 0)
                 {
-                    Debug.Log("Enemy is dead");
+				player.GetComponent<PlayerController>().increaseExperience(experience);
                     Destroy(gameObject);
-                }
-                break;
-            case "Player":
-                var controller = collider.gameObject.GetComponentInChildren<PlayerController>();
-                controller.health -= demage;
-                if (controller.health <= 0)
-                {
-                    Destroy(player);
-                    Debug.Log("Game Over, you are lost");
                 }
                 break;
          }

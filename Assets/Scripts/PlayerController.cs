@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using AngryCook;
 using System.Collections;
 
@@ -12,14 +13,27 @@ public class PlayerController : MonoBehaviour {
 
 	private Weapon[] weapons;
 	private int currentWeapon;
-  public float health;
+  	public float maxHealth;
+
+	//Stats screens
+	public Text healthText;
+	public Text weaponMonitorText;
+	public Text experienceText;
+	public Text messageText;
+	public Text enemyLeftText;
 
 	private Rigidbody rb;
-	
+	private float health;
+	private int experience;
+	private string message;
+	private int enemyLeft;
+
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
 		InitializeWeapons ();
+		health = maxHealth;
+		showMessage ("");
 	}
 	
 	void Update()
@@ -28,7 +42,16 @@ public class PlayerController : MonoBehaviour {
 			FireCurrentWeapon ();
 		if (Input.GetKeyUp (KeyCode.Tab))
 			NextWeapon ();
+		UpdateUI();
+	}
 
+	void UpdateUI()
+	{
+		healthText.text = "HP: " + Mathf.RoundToInt (health) + " / " + Mathf.RoundToInt (maxHealth);
+		weaponMonitorText.text = "Food: " + weapons [currentWeapon].name + "\n" + "Count: " + weapons [currentWeapon].ammo;
+		experienceText.text = "XP: " + experience;
+		messageText.text = message;
+		enemyLeftText.text = "Enemies left: " + enemyLeft;
 	}
 
 	void FireCurrentWeapon()
@@ -63,4 +86,17 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	public void increaseExperience(int amount)
+	{
+		experience += amount;
+	}
+
+	public void showMessage(string message)
+	{
+		this.message = message;
+	}
+
+	public void setEnemiesLeft(int number) {
+		this.enemyLeft = number;
+	}
 }

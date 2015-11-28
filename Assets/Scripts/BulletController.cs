@@ -19,4 +19,5 @@ public class BulletController : MonoBehaviour {
 		if(!other.gameObject.CompareTag("Player"))
 			Destroy(gameObject);
 	}
+
 }
