@@ -48,7 +48,8 @@ public class PlayerController : MonoBehaviour {
 	void UpdateUI()
 	{
 		healthText.text = "HP: " + Mathf.RoundToInt (health) + " / " + Mathf.RoundToInt (maxHealth);
-		weaponMonitorText.text = "Food: " + weapons [currentWeapon].name + "\n" + "Count: " + weapons [currentWeapon].ammo;
+		weaponMonitorText.text = "Food: " + weapons [currentWeapon].name + "\n" + "Count: " + weapons [currentWeapon].ammo +
+            "\nValue: " + weaponTypes[currentWeapon].GetComponent<BulletController>().damage;
 		experienceText.text = "XP: " + experience;
 		messageText.text = message;
 		enemyLeftText.text = "Enemies left: " + enemyLeft;
