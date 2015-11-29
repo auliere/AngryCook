@@ -12,9 +12,6 @@ public class EnemyActionScript : MonoBehaviour {
     public bool stanned = false;
     public float stanStart;
     public float stanDuration;
-        //public int 
-
-	public int experience;
 
     GameObject player;
 

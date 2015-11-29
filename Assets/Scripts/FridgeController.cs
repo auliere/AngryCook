@@ -21,11 +21,11 @@ public class FridgeController : MonoBehaviour {
 	void Update () {
         if (controller != null && Input.GetKeyDown(KeyCode.F)) {
             controller.addWeaponAmmo(weapons);
-			controller.showMessage("Food taken!");
             for (int i = 0; i < weapons.Length; i++)
             {
                 weapons[i].ammo = 0;
             }
+			controller.showMessage("Food taken!");
         }
 	}
 

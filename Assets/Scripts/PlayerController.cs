@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour {
 
 	private Weapon[] weapons;
 	private int currentWeapon;
-    private float health;
     public float maxHealth;
 
 	//Stats screens
@@ -117,6 +116,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     Time.timeScale = 0;
                     Debug.Log("Game Over, you are dead");
+                    showMessage("Game Over, they ate you!");
                     //Destroy(gameObject);
                 }
                 break;

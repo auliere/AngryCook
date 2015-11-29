@@ -28,13 +28,15 @@ public class SpawnScript : MonoBehaviour {
         var elements = GameObject.FindGameObjectsWithTag("Respawn").ToList();
         for (int i = 0; i < elements.Count; i++)
             Spawn(elements[i]);
+		Debug.Log (numberOfEnemies);
+        RefreshEnemiesLeft();
     }
 
     void Spawn(GameObject respawn) { 
         if (enemies.Count >= maxAmountOfEnemies)
             return;
         var enemy = Instantiate(this.enemy);
-        
+		enemies.Add (enemy);
         enemy.transform.position = respawn.transform.position;
     }
 
@@ -43,6 +45,11 @@ public class SpawnScript : MonoBehaviour {
         int index = enemies.IndexOf(enemy);
         if (index > -1)
             enemies.RemoveAt(index);
-        player.GetComponent<PlayerController>().setEnemiesLeft(numberOfEnemies);
+        RefreshEnemiesLeft();
 	}
+
+    private void RefreshEnemiesLeft()
+    {
+        player.GetComponent<PlayerController>().setEnemiesLeft(numberOfEnemies);
+    }
 }
