@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour {
 
 	private Weapon[] weapons;
 	private int currentWeapon;
-  	public float maxHealth;
+    private float health;
+    public float maxHealth;
 
 	//Stats screens
 	public Text healthText;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour {
 	private int experience;
 	private string message;
 	private int enemyLeft;
-
+	
 	void Start()
 	{
 		rb = GetComponent<Rigidbody>();
@@ -99,4 +100,27 @@ public class PlayerController : MonoBehaviour {
 	public void setEnemiesLeft(int number) {
 		this.enemyLeft = number;
 	}
+
+    void OnCollisionStay(Collision hit)
+    {
+        Debug.Log(hit.collider.gameObject.tag);
+        switch (hit.gameObject.tag)
+        {
+            case "Enemy":
+                var enemy = hit.collider.GetComponent<EnemyActionScript>();
+                if (enemy.stanned)
+                    return;
+
+                health -= enemy.damage * Time.deltaTime;
+                Debug.Log("Taking damage, health left: " + health);
+                if (health <= 0)
+                {
+                    Time.timeScale = 0;
+                    Debug.Log("Game Over, you are dead");
+                    //Destroy(gameObject);
+                }
+                break;
+        }
+    }
+
 }

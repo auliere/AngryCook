@@ -41,7 +41,7 @@ namespace AngryCook
 			return false;
 		}
 
-		public String ToString() {
+		public override String ToString() {
 			return name + " " + ammo;
 		}
 	 	

@@ -9,6 +9,7 @@ public class FridgeController : MonoBehaviour {
     public PlayerController controller;
     public Weapon[] weapons = Weapon.Initialise();
 
+
 	// Use this for initialization
 	void Start () {
         int n = rand.Next(weapons.Length) + 1;
@@ -21,6 +22,10 @@ public class FridgeController : MonoBehaviour {
         if (controller != null && Input.GetKeyDown(KeyCode.F)) {
             controller.addWeaponAmmo(weapons);
 			controller.showMessage("Food taken!");
+            for (int i = 0; i < weapons.Length; i++)
+            {
+                weapons[i].ammo = 0;
+            }
         }
 	}
 
@@ -33,9 +38,9 @@ public class FridgeController : MonoBehaviour {
     }
 
 	void OnTriggerExit(Collider collider) {
-		if(collider.gameObject.CompareTag("Player")) {
-			controller = collider.gameObject.GetComponentInChildren<PlayerController>();
+        if(collider.gameObject.CompareTag("Player")) {
+            controller = collider.gameObject.GetComponentInChildren<PlayerController>();
 			controller.showMessage("");
-		}
-	}
+        }
+    }
 }

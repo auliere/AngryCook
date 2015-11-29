@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class SpawnScript : MonoBehaviour {
     System.Random rand = new System.Random();
-
+    public int numberOfEnemies { get
+        {
+            return enemies.Count;
+        } }
     int minZ = 5;
     int maxZ = 10;
     int minX = 5;
@@ -13,8 +17,7 @@ public class SpawnScript : MonoBehaviour {
     public GameObject enemy;
 
     ArrayList enemies = new ArrayList();
-    int numberOfEnemies = 0;
-    int maxAmountOfEnemies = 20;
+    public int maxAmountOfEnemies;
     Animator anim;
 
     ArrayList spawnPoints = new ArrayList() { };
@@ -22,23 +25,24 @@ public class SpawnScript : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        numberOfEnemies = rand.Next(10, 20);
-        for (int i = 2; i < numberOfEnemies+2; i++)
-            Spawn(i);
+        var elements = GameObject.FindGameObjectsWithTag("Respawn").ToList();
+        for (int i = 0; i < elements.Count; i++)
+            Spawn(elements[i]);
     }
 
-    void Spawn(int i) {
+    void Spawn(GameObject respawn) { 
         if (enemies.Count >= maxAmountOfEnemies)
             return;
         var enemy = Instantiate(this.enemy);
         
-        enemy.transform.position = new Vector3(
-            player.transform.position.x + rand.Next(minX, maxX) * Mathf.Cos(i), 
-            player.transform.position.y, player.transform.position.z + rand.Next(minX, maxX) * Mathf.Sin(i));
+        enemy.transform.position = respawn.transform.position;
     }
 
-	// Update is called once per frame
-	void Update () {
-		player.GetComponent<PlayerController> ().setEnemiesLeft (numberOfEnemies);
+    public void DeleteEnemy(GameObject enemy)
+    {
+        int index = enemies.IndexOf(enemy);
+        if (index > -1)
+            enemies.RemoveAt(index);
+        player.GetComponent<PlayerController>().setEnemiesLeft(numberOfEnemies);
 	}
 }
