@@ -102,7 +102,6 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionStay(Collision hit)
     {
-        Debug.Log(hit.collider.gameObject.tag);
         switch (hit.gameObject.tag)
         {
             case "Enemy":
