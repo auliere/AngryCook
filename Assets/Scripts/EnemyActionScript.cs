@@ -30,7 +30,10 @@ public class EnemyActionScript : MonoBehaviour {
                 stanned = false;
             return;
         }
+    }
 
+    void LateUpdate()
+    {
         float deltaX = player.transform.position.x - gameObject.transform.position.x;
         float deltaY = player.transform.position.y - gameObject.transform.position.y;
         float deltaz = player.transform.position.z - gameObject.transform.position.z;
@@ -54,7 +57,7 @@ public class EnemyActionScript : MonoBehaviour {
             case "Bullet":
                 float damage = collider.gameObject.GetComponent<BulletController>().damage;
                 hungerLevel -= damage;
-				
+                player.GetComponent<PlayerController>().showMessage("Hunger left: " + hungerLevel);
 				if (hungerLevel <= 0)
                 {
 				player.GetComponent<PlayerController>().increaseExperience(experience);

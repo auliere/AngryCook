@@ -12,7 +12,7 @@ public class BulletController : MonoBehaviour {
 
 	void Update(){
 		float deltaRotate = 45 * Time.deltaTime;
-		transform.Rotate (Vector3.one * deltaRotate);
+		transform.Rotate (Vector3.one * deltaRotate * 2);
 	}
 
 	void OnTriggerEnter(Collider other) {

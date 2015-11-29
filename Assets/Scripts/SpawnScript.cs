@@ -28,7 +28,6 @@ public class SpawnScript : MonoBehaviour {
         var elements = GameObject.FindGameObjectsWithTag("Respawn").ToList();
         for (int i = 0; i < elements.Count; i++)
             Spawn(elements[i]);
-		Debug.Log (numberOfEnemies);
         RefreshEnemiesLeft();
     }
 

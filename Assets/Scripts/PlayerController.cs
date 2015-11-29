@@ -21,12 +21,15 @@ public class PlayerController : MonoBehaviour {
 	public Text experienceText;
 	public Text messageText;
 	public Text enemyLeftText;
+    public Text collectibleText;
 
 	private Rigidbody rb;
 	private float health;
 	private int experience;
 	private string message;
 	private int enemyLeft;
+    private int collectibles;
+    private int maxCollectibles;
 	
 	void Start()
 	{
@@ -41,7 +44,7 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetKeyUp (KeyCode.RightControl))
 			FireCurrentWeapon ();
 		if (Input.GetKeyUp (KeyCode.Tab))
-			NextWeapon ();
+			NextWeapon();
 		UpdateUI();
 	}
 
@@ -52,7 +55,8 @@ public class PlayerController : MonoBehaviour {
             "\nValue: " + weaponTypes[currentWeapon].GetComponent<BulletController>().damage;
 		experienceText.text = "XP: " + experience;
 		messageText.text = message;
-		enemyLeftText.text = "Enemies left: " + enemyLeft;
+		enemyLeftText.text = "Hungry students: " + enemyLeft;
+        collectibleText.text = "Collectibles: " + collectibles + " / " + maxCollectibles;
 	}
 
 	void FireCurrentWeapon()
@@ -103,7 +107,6 @@ public class PlayerController : MonoBehaviour {
 
     void OnCollisionStay(Collision hit)
     {
-        Debug.Log(hit.collider.gameObject.tag);
         switch (hit.gameObject.tag)
         {
             case "Enemy":
@@ -118,9 +121,22 @@ public class PlayerController : MonoBehaviour {
                     Time.timeScale = 0;
                     Debug.Log("Game Over, you are dead");
                     showMessage("Game Over, they ate you!");
-                    //Destroy(gameObject);
                 }
                 break;
+        }
+    }
+    public void setCollectiblesMax(int amount)
+    {
+        maxCollectibles = amount;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+
+        if (other.CompareTag("Pick Up"))
+        {
+            collectibles += 1;
+            Destroy(other.gameObject);
         }
     }
 
