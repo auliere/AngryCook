@@ -42,25 +42,6 @@ public class EnemyActionScript : MonoBehaviour {
         float deltaX = player.transform.position.x - gameObject.transform.position.x;
         float deltaY = player.transform.position.y - gameObject.transform.position.y;
         float deltaz = player.transform.position.z - gameObject.transform.position.z;
-
-        //if (deltaX * deltaX + deltaY * deltaY + deltaz * deltaz <= range)
-        //{
-        //   Move();
-        //}
-        //else
-        //{
-        //    var agent = gameObject.GetComponent<NavMeshAgent>();
-        //    var controller = gameObject.GetComponent<EnemyActionScript>();
-        //    float dist = agent.remainingDistance;
-        //    if (agent.remainingDistance <= 1 )
-        //    {
-        //        //
-        //        agent.SetDestination(controller.start.transform.position);
-        //        var tmp = controller.start;
-        //        controller.start = controller.destination;
-        //        controller.destination = tmp;
-        //    }
-        //}
     }
 
     void LateUpdate() {
